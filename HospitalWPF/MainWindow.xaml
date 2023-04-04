@@ -1,0 +1,70 @@
+﻿<Window x:Class="HospitalWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HospitalWPF"
+        xmlns:UserControls="clr-namespace:HospitalWPF.User_Controls"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="700">
+    <Grid Background="#262626">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <UserControls:SearchBar DataContext="{Binding CustomVM}"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+
+            <ListView Background="#666666" Foreground="LightGray" FontWeight="Bold" BorderThickness="0" Margin="10,10,10,10" 
+                      SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding FilteredList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, IsAsync=True}"/>
+
+            <StackPanel Grid.Column="1" Margin="10" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal" Margin="0,20">
+                    <TextBlock Width="96" Background="Transparent" Foreground="Gray" FontSize="14" FontWeight="Bold" Text="ID:"/>
+                    <TextBlock Background="Transparent" Foreground="LightGray" Width="195" HorizontalAlignment="Center" FontSize="14" Text="{Binding Identity}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,20">
+                    <TextBlock Width="96" Background="Transparent" Foreground="Gray" FontSize="14" FontWeight="Bold" Text="First Name:"/>
+                    <TextBox Background="#666666" Foreground="LightGray" Width="195" BorderThickness="0" VerticalContentAlignment="Center" FontSize="14" Text="{Binding FirstName}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,20">
+                    <TextBlock Width="96" Background="Transparent" Foreground="Gray" FontSize="14" FontWeight="Bold" Text="Last Name:"/>
+                    <TextBox Background="#666666" Foreground="LightGray" Width="195" BorderThickness="0" VerticalContentAlignment="Center" FontSize="14" Text="{Binding LastName}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,20">
+                    <TextBlock Width="96" Background="Transparent" Foreground="Gray" FontSize="14" FontWeight="Bold" Text="Birth Date:"/>
+                    <ComboBox Width="50" Margin="5,0,0,0"
+                              SelectedItem="{Binding SelectedDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Days}"/>
+                    <ComboBox Width="50" Margin="5,0,0,0" 
+                              SelectedItem="{Binding SelectedMonth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Months}"/>
+                    <ComboBox Width="70" Margin="5,0,0,0" 
+                              SelectedItem="{Binding SelectedYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Years}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,20">
+                    <TextBlock Width="96" Background="Transparent" Foreground="Gray" FontSize="14" FontWeight="Bold" Text="Occupation:"/>
+                    <ComboBox Width="150" ItemsSource="{Binding OccupationsList}"
+                              SelectedItem="{Binding Occupation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,20">
+                    <TextBlock Width="96" Background="Transparent" Foreground="Gray" FontSize="14" FontWeight="Bold" Text="Speciality:"/>
+                    <TextBox Background="#666666" Foreground="LightGray" Width="195" BorderThickness="0" VerticalContentAlignment="Center" FontSize="14" 
+                             Text="{Binding SpecLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2">
+                <Button Content="Add" Command="{Binding Adder}" FontSize="15" Height="30" Margin="0,10,2,0"/>
+                <Button Content="Remove" Command="{Binding RemoveButton}" FontSize="15" Height="30" Margin="0,10,2,0"/>
+                <Button Content="Clear" Command="{Binding ClearButton}" FontSize="15" Height="30" Margin="0,10,2,0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
