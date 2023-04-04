@@ -280,11 +280,7 @@ namespace HospitalWPF
 
         public void AddToDatabase()
         {
-            if (IsDateInvalid())
-            {
-                InputError("Invalid date. Please try again.");
-            }
-            else
+            if (IsDataValid())
             {
                 decimal id = 0;
                 string bday = $"{SelectedYear}-{SelectedMonth}-{SelectedDay}";
@@ -366,7 +362,30 @@ namespace HospitalWPF
             }
         }
 
-        private bool IsDateInvalid() => Int32.Parse(SelectedDay) > DateTime.DaysInMonth(Int32.Parse(SelectedYear), Int32.Parse(SelectedMonth));
+        private bool IsDataValid()
+        {
+            if (String.IsNullOrEmpty(SelectedDay) || String.IsNullOrEmpty(SelectedMonth) || String.IsNullOrEmpty(SelectedYear))
+            {
+                InputError("Date Boxes cannot be empty. Please try again.");
+                return false;
+            }
+            else if (Int32.Parse(SelectedDay) > DateTime.DaysInMonth(Int32.Parse(SelectedYear), Int32.Parse(SelectedMonth)))
+            {
+                InputError($"{SelectedDay}-{SelectedMonth}-{SelectedYear} does not exist. Please try again.");
+                return false;
+            }
+            else if (String.IsNullOrEmpty(Occupation))
+            {
+                InputError("Occupation cannot be empty. Please try again.");
+                return false;
+            }
+            else if(Occupation == "Doctor" || Occupation == "Nurse" && String.IsNullOrEmpty(SpecLevel))
+            {
+                InputError($"{Occupation} requires a specialization/level entry. Please try again.");
+                return false;
+            }
+            return true;
+        }
 
         public void Display()
         {
@@ -495,7 +514,6 @@ namespace HospitalWPF
             SelectedMonth = "";
             SelectedYear = "";
             Occupation = "";
-            OnPropertyChanged("Occupation");
             SpecLevel = "";
         }
 
