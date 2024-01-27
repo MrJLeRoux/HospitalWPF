@@ -30,4 +30,5 @@ jobs:
           continue_on_error: false
           check_name: "Dotnet Format"
           dotnet_format: true
+          dotnet_args: "--no-restore"
  
