@@ -1,0 +1,32 @@
+name: Format
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+
+    permissions:
+      checks: write
+      contents: write
+
+    steps:
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 7.x
+
+      - uses: wearerequired/lint-action@v2
+        with:
+          auto_fix: false
+          continue_on_error: false
+          check_name: "Dotnet Format"
+          dotnet_format: true
+ 
